@@ -5,7 +5,7 @@ using namespace std;
 // Bubble sort ---> Pushes the maximum number to the end
 void bubble_sort(vector<int> &arr, int n) {
     for (int i = 0; i < n - 1; i++) {
-        int didSwap = 0;
+        // int didSwap = 0;
 
         for (int j = 0; j < n - i - 1; j++) {
             if(arr[j] > arr[j + 1]) {
@@ -15,7 +15,7 @@ void bubble_sort(vector<int> &arr, int n) {
             }
         }
 
-        if (didSwap == 0) break; // best case (already sorted array)
+        // if (didSwap == 0) break; // best case (already sorted array)
     }
 }
 
