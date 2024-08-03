@@ -3,26 +3,45 @@
 using namespace std;
 
 // Selection sort ---> finds the minimum number and swap
-void selection_sort(vector<int> &arr, int n) {
-    for (int i = 0; i <= (n - 2); i++) {
-        int min = i;
-        
-        for (int j = i; j <= (n - 1); j++) {
-            if (arr[j] < arr[min]) min = j;
-        }
 
-        int temp = arr[min];
-        arr[min] = arr[i];
-        arr[i] = temp;
+int select(int arr[], int i, int n) {
+    int min = i;
+    for (int j = i; j <= n - 1; j++) {
+        if(arr[j] < arr[min]) min = j;
+    }
+
+    return min;
+}
+
+int selection_sort(int arr[], int n) {
+    for (int i = 0; i <= n - 2; i++) {
+        int min = select(arr, i, n);
+
+        if(min != i) swap(arr[min], arr[i]);
     }
 }
+
+// void selection_sort(vector<int> &arr, int n) {
+//     for (int i = 0; i <= (n - 2); i++) {
+//         int min = i;
+        
+//         for (int j = i; j <= (n - 1); j++) {
+//             if (arr[j] < arr[min]) min = j;
+//         }
+
+//         int temp = arr[min];
+//         arr[min] = arr[i];
+//         arr[i] = temp;
+//     }
+// }
 
 int main() {
     int n;
     cout << "Enter the size of an array: ";
     cin >> n;
 
-    vector<int> arr(n);
+    // vector<int> arr(n);
+    int arr[n];
     for (int i = 0; i < n; i++) {
         cout << "Enter element " << i + 1 << endl;
         cin >> arr[i];
