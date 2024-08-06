@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+using namespace std;
 
 // 1 ---> find largest from the array
 int largest(vector<int> &arr, int n) {
