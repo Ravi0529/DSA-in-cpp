@@ -47,11 +47,42 @@ int removeDuplicates(vector<int> &arr) {
     return i + 1;
 }
 
+// 5 ---> rotating array to left (1st index)
+int leftRotate1(vector<int> &arr) {
+    int temp = arr[0];
+
+    for (int i = 1; i < n; i++) {
+        arr[i - 1] = arr[i];
+    }
+    arr[n - 1] = temp;
+
+    return arr;
+}
+
+// 6 ---> right rotation of the array by D places
+void rotateD(vector<int> &nums, int k) {
+    int n = nums.size();
+    k = k % n;
+
+    vector<int> temp(n);
+    for (int i = 0; i < k; ++i) {
+        temp[i] = nums[n - k + i];
+    }
+    for (int i = k; i < n; ++i) {
+        temp[i] = nums[i - k];
+    }
+    for (int i = 0; i < n; ++i) {
+        nums[i] = temp[i];
+    }
+}
+
 int main() {
     largest(arr, n);
     secondLargest(arr);
     sorted(arr);
     removeDuplicates(arr);
+    leftRotate1(arr);
+    rotateD(arr);
 
     return 0;
 }
