@@ -19,7 +19,7 @@ int secondLargest(vector<int> &arr) {
         if(largest <= arr[i]) largest = arr[i];
     }
 
-    secondLargest = -1;
+    int secondLargest = -1;
     for (int i = 0; i < arr.size(); i++) {
         if(secondLargest <= arr[i] && arr[i] != largest) secondLargest = arr[i];
     }
@@ -28,7 +28,7 @@ int secondLargest(vector<int> &arr) {
 }
 
 // 3 ---> check if array is sorted or not
-bool sorted(int vector<int> &arr) {
+bool sorted(vector<int> &arr) {
     for(int i = 0; i < arr.size(); i++) {
         if(arr[i] > arr[i + 1]) return false;
     }
@@ -49,7 +49,7 @@ int removeDuplicates(vector<int> &arr) {
 }
 
 // 5 ---> rotating array to left (1st index)
-int leftRotate1(vector<int> &arr) {
+int leftRotate1(vector<int> &arr, int n) {
     int temp = arr[0];
 
     for (int i = 1; i < n; i++) {
@@ -82,7 +82,7 @@ int main() {
     secondLargest(arr);
     sorted(arr);
     removeDuplicates(arr);
-    leftRotate1(arr);
+    leftRotate1(arr, n);
     rotateD(arr);
 
     return 0;
