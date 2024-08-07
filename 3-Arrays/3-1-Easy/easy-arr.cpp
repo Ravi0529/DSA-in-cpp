@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <set>
 using namespace std;
 
 // 1 ---> find largest from the array
@@ -77,13 +78,62 @@ void rotateD(vector<int> &nums, int k) {
     }
 }
 
+// 7 ---> moves zeros at the last
+void moveZeros(vector<int> &nums) {
+    int j = -1;
+    for (int i = 0; i < nums.size(); i++) {
+        if(nums[i] == 0) {
+            j = i;
+            break;
+        }
+    }
+
+    if(j == -1) return;
+
+    for (int i = j + 1; i < nums.size(); i++) {
+        if(nums[i] != 0) {
+            int temp = nums[j];
+            nums[j] = nums[i];
+            nums[i] = temp;
+        }
+    }
+}
+
+// 8 ---> linear search
+int searchInSorted(int arr[], int N, int K) {
+    for (int i = 0; i < N; i++) {
+        if(arr[i] == K) return 1;
+    }
+    return -1;
+}
+
+// 9 ---> find union of 2 arrays
+vector<int> findUnion(int arr1[], int arr2[], int n, int m) {
+    set<int> st;
+    for (int i = 0; i < n; i++) {
+        st.insert(arr1[i]);
+    }
+    for (int i = 0; i < m; i++) {
+        st.insert(arr2[i]);
+    }
+
+    vector<int> temp;
+    for (auto iter : st) {
+        temp.push_back(iter);
+    }
+    return temp;
+}
+
 int main() {
     largest(arr, n);
     secondLargest(arr);
     sorted(arr);
     removeDuplicates(arr);
     leftRotate1(arr, n);
-    rotateD(arr);
+    rotateD(nums);
+    moveZeros(nums);
+    searchInSorted(arr, N, K);
+    findUnion(arr1, arr2, n, m);
 
     return 0;
 }
