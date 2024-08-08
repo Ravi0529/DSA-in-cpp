@@ -124,7 +124,50 @@ vector<int> findUnion(int arr1[], int arr2[], int n, int m) {
     return temp;
 }
 
-int main() {
+// 10 ---> Missing number from 1 to (n - 1) in an array
+// 10.1 ---> using hashing
+// time complexity --> O(n), space complexity --> O(n)
+int missingNum(vector<int> &nums) {
+    int n = nums.size();
+    int hashing[n + 1];
+    for (int i = 0; i < n; i++) {
+        hashing[nums[i]]++;
+    }
+
+    for (int i = 1; i < n; i++) {
+        if(hashing[i] == 0) return i;
+    }
+}
+
+// 10.2 ---> using Sum method
+// time complexity --> O(n), space complexity --> O(1)
+int missingNum(vector<int> &nums) {
+    int n = nums.size();
+    int sum = n * (n + 1) / 2;
+
+    int newSum = 0;
+    for(int i = 0; i < n; i++) {
+        newSum += nums[i];
+    }
+    return sum - newSum;
+}
+
+// 10.3 ---> using XOR method
+// time complexity --> O(n), space complexity --> O(1) but it'll never exceed the given size of array
+int missingNum(vector<int> &nums) {
+    int xor1 = 0, xor2 = 0;
+    int N = nums.size();
+    for (int i = 0; i < N; i++) {
+        xor2 = xor2 ^ nums[i];
+        xor1 = xor1 ^ (i + 1);
+    }
+
+    // xor1 = xor1 ^ N;
+    return xor1 ^ xor2;
+}
+
+int main()
+{
     largest(arr, n);
     secondLargest(arr);
     sorted(arr);
@@ -134,6 +177,7 @@ int main() {
     moveZeros(nums);
     searchInSorted(arr, N, K);
     findUnion(arr1, arr2, n, m);
+    missingNum(nums);
 
     return 0;
 }
