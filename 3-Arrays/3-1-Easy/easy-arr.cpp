@@ -179,6 +179,14 @@ int findMaxConsecutiveOnes(vector<int>& nums) {
     return maximum;
 }
 
+int singleNum(vector<int> &nums) {
+    int xorr = 0;
+    for (int i = 0; i < nums.size(); i++) {
+        xorr = xorr ^ nums[i];
+    }
+    return xorr;
+}
+
 int main()
 {
     largest(arr, n);
@@ -192,6 +200,7 @@ int main()
     findUnion(arr1, arr2, n, m);
     missingNum(nums);
     findMaxConsecutiveOnes(nums);
+    singleNum(nums);
 
     return 0;
 }
