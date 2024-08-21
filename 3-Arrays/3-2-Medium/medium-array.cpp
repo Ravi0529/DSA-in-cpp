@@ -65,13 +65,65 @@ void sortColors(vector<int>& nums) {
     }
 }
 
+// 3 ---> majority elements, brute force soln
+int majorityElement(vector<int>& nums) {
+    for(int i = 0; i < nums.size(); i++) {
+        int count = 0;
+
+        for(int j = 0; j < nums.size(); j++) {
+            if(nums[j] == nums[i]) count++;
+        }
+        if(count > (nums.size() / 2)) return nums[i];
+    }
+}
+
+// 3 ---> majority elements, better soln
+int majorityElement(vector<int>& nums) {
+    map<int, int> mpp;
+    // O(NlogN)
+    for(int i = 0; i < nums.size(); i++) {
+        mpp[nums[i]]++;
+    }
+    // O(N)
+    for(auto iter : mpp) {
+        if(iter.second < (nums.size() / 2)) return iter.first;
+    }
+    return -1;
+}
+
+// 3 ---> majority elements, optimal soln (Moore's Voting Algorithm)
+int majorityElement(vector<int>& nums) {
+    int count = 0, el;
+    for(int i = 0; i < nums.size(); i++) {
+        if(count == 0) {
+            count == 1;
+            el = nums[i];
+        }
+        else if(nums[i] == el) count++;
+        else count--;
+    }
+
+    int count1 = 0;
+    for(int i = 0; i < nums.size(); i++) {
+        if(nums[i] == el) count1++;
+    }
+    if(count1 > (nums.size() / 2)) return el;
+    return -1;
+}
+
 int main() {
+    // 1 
     vector<int> arr = {1,2,3,4,5};
     int target = 3;
     twoSum(arr, target);
 
+    // 2
     vector<int> arr1 = {1,2,0,0,0,2,2,1,2,0,1};
     sortColors(arr1);
+
+    // 3
+    vector<int> arr3 = {1,1,1,2,4,6,2,1,1,1};
+    majorityElement(arr3);
 
     return 0;
 }
