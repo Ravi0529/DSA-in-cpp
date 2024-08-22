@@ -2,6 +2,8 @@
 #include <vector>
 #include <map>
 #include <climits>
+#include <algorithm>
+#include <unordered_set>
 using namespace std;
 
 // 1 ---> 2 sum, brute force and better soln
@@ -153,6 +155,82 @@ vector<int> rearrangeArray(vector<int>& nums) {
     return ans;
 }
 
+// 7 ---> Next Permutation
+void nextPermutation(vector<int>& nums) {
+    int n = nums.size();
+    int index = -1;
+    for(int i = n - 2; i >= 0; i--) {
+        if(nums[i] < nums[i + 1]) {
+            index = i;
+            break;
+        }
+    }
+    if(index == -1) {
+        reverse(nums.begin(), nums.end());
+        return;
+    }
+
+    for(int i = n - 1; i > index; i--) {
+        if(nums[i] > nums[index]) {
+            swap(nums[i], nums[index]);
+            break;
+        }
+    }
+    reverse(nums.begin() + index + 1, nums.end());
+}
+
+// 8 ---> leaders in an array, brute force soln
+vector<int> leaders(int n, int arr[]) {
+    vector<int> ans;
+    int leader;
+    for(int i = 0; i < n; i++) {
+        leader = true;
+        for(int j = i + 1; j < n; j++) {
+            if(arr[j] > arr[i]) {
+                leader = false;
+                break;
+            }
+        }
+    }
+    if(leader == true) ans.push_back(leader); 
+}
+
+// 8 ---> leaders in an array, optimal soln
+vector<int> leaders(int n, int arr[]) {
+    vector<int> ans;
+    int maximum = INT_MIN;
+    for(int i = n - 1; i >= 0; i--) {
+        if(arr[i] >= maximum) {
+            ans.push_back(arr[i]);
+        }
+        maximum = max(arr[i], maximum);
+    }
+    return ans;
+}
+
+// 9 ---> longest consecutive sequence
+int longestConsecutiveSequence(vector<int> &arr) {
+    int n = arr.size();
+    int longest = 0;
+    unordered_set<int> st;
+    for(int i = 0; i < n; i++) {
+        st.insert(arr[i]);
+    }
+
+    for(auto iter : st) {
+        if(st.find(iter - 1) == st.end()) {
+            int cnt = 1;
+            int x = iter;
+            while(st.find(x + 1) != st.end()) {
+                x += 1;
+                cnt += 1;
+            }
+            longest = max(longest, cnt);
+        }
+    }
+    return longest;
+}
+
 int main() {
     // 1 
     vector<int> arr = {1,2,3,4,5};
@@ -178,6 +256,19 @@ int main() {
     // 6
     vector<int> arr6 = {1,2,3,-1,-2,-3};
     rearrangeArray(arr6);
+
+    // 7
+    vector<int> arr7 = {1,3,5};
+    nextPermutation(arr7);
+
+    // 8
+    int arr8[] = {2,4,6,32,5};
+    int n = sizeof(arr8) / sizeof(arr8[0]);
+    leaders(n, arr8);
+
+    // 9
+    vector<int> arr9 = {101, 100, 3, 2, 1, 102, 2};
+    longestConsecutiveSequence(arr9);
 
     return 0;
 }
