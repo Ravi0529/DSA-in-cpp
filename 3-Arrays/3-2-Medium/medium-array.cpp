@@ -231,6 +231,114 @@ int longestConsecutiveSequence(vector<int> &arr) {
     return longest;
 }
 
+// 10 ---> set matrix zeros, brute force soln
+void markRow(int i, vector<vector<int>>& matrix, int m) {
+    for(int j = 0; j < m; j++) {
+        if(matrix[i][j] != 0) {
+            matrix[i][j] = -1;
+        }
+    }
+}
+
+void markCol(int j, vector<vector<int>>& matrix, int n) {
+    for(int i = 0; i < n; i++) {
+        if(matrix[i][j] != 0) {
+            matrix[i][j] = -1;
+        }
+    }
+}
+
+void setZeroes(vector<vector<int>>& matrix) {
+    int n = matrix.size();
+    int m = matrix[0].size();
+
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            if(matrix[i][j] == 0) {
+                markRow(i, matrix, m);
+                markCol(j, matrix, n);
+            }
+        }
+    }
+
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            if(matrix[i][j] == -1) {
+                matrix[i][j] = 0;
+            }
+        }
+    } 
+}
+
+void printMatrix(const vector<vector<int>>& matrix) {
+    for (const auto& row : matrix) {
+        for (int val : row) {
+            cout << val << " ";
+        }
+        cout << endl;
+    }
+}
+
+// 10 ---> set zeros, better soln
+void setZeroes(vector<vector<int>>& matrix) {
+    int n = matrix.size();
+    int m = matrix[0].size();
+
+    int col[m] = {0}, row[n] = {0};
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            if(matrix[i][j] == 0) {
+                row[i] = 1;
+                col[j] = 1;
+            }
+        }
+    }
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            if(row[i] || col[j]) {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+}
+
+// 10 ---> set zeros, optimal soln
+void setZeroes(vector<vector<int>>& matrix) {
+    int n = matrix.size();
+    int m = matrix[0].size();
+    int col0 = 1;
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            if(matrix[i][j] == 0) {
+                matrix[i][0] = 0;
+                if(j != 0) {
+                    matrix[0][j] = 0;
+                }
+                else col0 = 0;
+            }
+        }
+    }
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            if(matrix[i][j] != 0) {
+                if(matrix[0][j] == 0 || matrix[i][0] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+    if(matrix[0][0] == 0) {
+        for(int j = 0; j < m; j++) {
+            matrix[0][j] = 0;
+        }
+    }
+    if(col0 == 0) {
+        for(int i = 0; i < n; i++) {
+            matrix[i][0] = 0;
+        }
+    }
+}
+
 int main() {
     // 1 
     vector<int> arr = {1,2,3,4,5};
@@ -269,6 +377,11 @@ int main() {
     // 9
     vector<int> arr9 = {101, 100, 3, 2, 1, 102, 2};
     longestConsecutiveSequence(arr9);
+
+    // 10
+    vector<vector<int>> arr10 = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
+    setZeroes(arr10);
+    printMatrix(arr10);
 
     return 0;
 }
