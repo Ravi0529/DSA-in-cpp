@@ -335,6 +335,41 @@ void setZeroes(vector<vector<int>>& matrix) {
     }
 }
 
+// 11 ---> Rotate image, brute force soln
+void rotateImage(vector<vector<int>> &matrix) {
+    int n = matrix.size();
+    int m = matrix[0]. size();
+    vector<vector<int>> ans(m, vector<int>(n));
+
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            ans[j][n - i - 1] = matrix[i][j];
+        }
+    }
+
+    for (const auto& row : ans) {
+        for (int val : row) {
+            cout << val << " ";
+        }
+        cout << endl;
+    }
+}
+
+// 11 ---> Rotate image, optimal soln
+void rotate(vector<vector<int>>& matrix) {
+    int n = matrix.size();
+
+    for(int i = 0; i < n - 1; i++) {
+        for(int j = i + 1; j < n; j++) {
+            swap(matrix[i][j], matrix[j][i]);
+        }
+    }
+
+    for(int i = 0; i < n; i++) {
+        reverse(matrix[i].begin(), matrix[i].end());
+    }
+}
+
 int main() {
     // 1 
     vector<int> arr = {1,2,3,4,5};
@@ -378,6 +413,10 @@ int main() {
     vector<vector<int>> arr10 = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
     setZeroes(arr10);
     printMatrix(arr10);
+
+    // 11
+    vector<vector<int>> arr11 = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    rotateImage(arr11);
 
     return 0;
 }
