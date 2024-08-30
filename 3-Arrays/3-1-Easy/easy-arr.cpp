@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <set>
+#include <map>
 using namespace std;
 
 // 1 ---> find largest from the array
@@ -187,8 +188,48 @@ int singleNum(vector<int> &nums) {
     return xorr;
 }
 
-int main()
-{
+// 11 ---> Longest subarray with sum K (Positives), optimal soln
+int longestSubArraywihtSumK(vector<int> &arr, int n, int k) {
+    int left = 0, right = 0, maxLen = 0;
+    int sum = arr[0];
+    while(right < n) {
+        while(left <= right && sum > k) {
+            sum -= arr[left];
+            left++;
+        }
+        if (sum == k) {
+            maxLen = max(maxLen, right - left + 1);
+        }
+        right++;
+        if(right < n) sum += arr[right];
+    }
+    return maxLen;
+}
+
+
+// 12 ---> Longest subarray with sum K (Positives + Negatives), optimal soln
+    int lenOfLongSubarr(int A[],  int N, int K) { 
+        map<int, int> preSumMap;
+        int sum = 0;
+        int maxLen = 0;
+        for(int i = 0; i < N; i++) {
+            sum += A[i];
+            if(sum == K) {
+                maxLen = max(maxLen, i + 1);
+            }
+            int rem = sum - K;
+            if(preSumMap.find(rem) != preSumMap.end()) {
+                int len = i - preSumMap[rem];
+                maxLen = max(maxLen, len);
+            }
+            if(preSumMap.find(sum) == preSumMap.end()) {
+                preSumMap[sum] = i;
+            }
+        }
+        return maxLen;
+    }
+
+int main() {
     largest(arr, n);
     secondLargest(arr);
     sorted(arr);
@@ -201,6 +242,8 @@ int main()
     missingNum(nums);
     findMaxConsecutiveOnes(nums);
     singleNum(nums);
+    lenOfLongSubarr(A, N, K);
+    longestSubArraywihtSumK(arr, n, k);
 
     return 0;
 }
