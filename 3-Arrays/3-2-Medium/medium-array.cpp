@@ -403,6 +403,25 @@ vector<int> spiralOrder(vector<vector<int>>& matrix) {
     return ans;
 }
 
+// 13 ---> count subarrays with given sum
+int subarraySum(vector<int>& nums, int k) {
+    int n = nums.size();
+    map<int, int> preSumMap;
+    int sum = 0, maxLen = 0, count = 0;
+
+    preSumMap[0] = 1;
+
+    for(int i = 0; i < n; i++) {
+        sum += nums[i];
+        int rem = sum - k;
+        if(preSumMap.find(rem) != preSumMap.end()) {
+            count += preSumMap[rem];
+        }
+        preSumMap[sum]++;  
+    }
+    return count;
+}
+
 int main() {
     // 1 
     vector<int> arr = {1,2,3,4,5};
@@ -454,6 +473,11 @@ int main() {
     // 12
     vector<vector<int>> arr12 = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
     spiralOrder(arr12);
+
+    // 13
+    vector<int> arr13 = {1,2,1,2,1};
+    int k = 3;
+    subarraySum(arr13, k);
 
     return 0;
 }
